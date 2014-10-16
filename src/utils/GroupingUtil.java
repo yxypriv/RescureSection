@@ -7,10 +7,10 @@ import java.util.Map;
 
 
 public class GroupingUtil {
-	public static <E> Map<Integer, ArrayList<E>> getLabelGroupingList(Collection<E> set, ILabeler<E> labeler) {
-		Map<Integer, ArrayList<E>> result = new HashMap<Integer, ArrayList<E>>();
+	public static <E> Map<String, ArrayList<E>> getLabelGroupingList(Collection<E> set, ILabeler<E> labeler) {
+		Map<String, ArrayList<E>> result = new HashMap<String, ArrayList<E>>();
 		for (E e : set) {
-			int label = labeler.getLabel(e);
+			String label = labeler.getLabel(e);
 			if (!result.containsKey(label))
 				result.put(label, new ArrayList<E>());
 			result.get(label).add(e);

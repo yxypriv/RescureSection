@@ -13,56 +13,56 @@ public class HitsUtil {
 	 * 
 	 * @param set
 	 * @param labelMethod
-	 * @return a list of int array stands for [label, hits] with descending order by hits.
+	 * @return a list of int array stands for [label, hits] with descending
+	 *         order by hits.
 	 */
-	public static <E> List<int[]> getOrderedHits(Collection<E> set, ILabeler<E> labelMethod) {
-		Map<Integer, Integer> hitsMap = getHitsMap(set, labelMethod);
-		
-		List<int[]> result = new ArrayList<int[]>();
-		for (Integer label : hitsMap.keySet()) {
-			int[] labelHits = new int[2];
-			labelHits[0] = label;
-			labelHits[1] = hitsMap.get(label);
+	public static <E> List<Pair<String, Integer>> getOrderedHits(Collection<E> set, ILabeler<E> labelMethod) {
+		Map<String, Integer> hitsMap = getHitsMap(set, labelMethod);
+
+		List<Pair<String, Integer>> result = new ArrayList<Pair<String, Integer>>();
+		for (String label : hitsMap.keySet()) {
+			Pair<String, Integer> labelHits = new Pair<String, Integer>(label, hitsMap.get(label));
 			result.add(labelHits);
 		}
-		Collections.sort(result, Collections.reverseOrder(new Comparator<int[]>() {
+		Collections.sort(result, Collections.reverseOrder(new Comparator<Pair<String, Integer>>() {
 			@Override
-			public int compare(int[] o1, int[] o2) {
-				return new Integer(o1[1]).compareTo(o2[1]);
+			public int compare(Pair<String, Integer> arg0, Pair<String, Integer> arg1) {
+				return arg0.getV2().compareTo(arg1.getV2());
 			}
 		}));
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param set
 	 * @param labelMethod
-	 * @return most hit label integer pair stands for [label, hits]  
+	 * @return most hit label integer pair stands for [label, hits]
 	 */
-	
-	public static <E> int[] getMostHits(Collection<E> set, ILabeler<E> labelMethod) {
-		Map<Integer, Integer> hitsMap = getHitsMap(set, labelMethod);
-		int[] result = new int[2]; 
-		for(Integer label : hitsMap.keySet()) {
+
+	public static <E> Pair<String, Integer> getMostHits(Collection<E> set, ILabeler<E> labelMethod) {
+		Map<String, Integer> hitsMap = getHitsMap(set, labelMethod);
+		Pair<String, Integer> result = null;
+		for (String label : hitsMap.keySet()) {
 			int hits = hitsMap.get(label);
-			if(hits > result[1]) {
-				result[0] = label;
-				result[1] = hits;
+			if (null == result || hits > result.getV2()) {
+				result = new Pair<String, Integer>(label, hits);
 			}
 		}
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param set
 	 * @param labelMethod
- 	 * @return hitmap mapping from label to hits.s
+	 * @return hitmap mapping from label to hits.s
 	 */
 
-	public static <E> Map<Integer, Integer> getHitsMap(Collection<E> set, ILabeler<E> labelMethod) {
-		Map<Integer, Integer> hitsMap = new HashMap<Integer, Integer>();
+	public static <E> Map<String, Integer> getHitsMap(Collection<E> set, ILabeler<E> labelMethod) {
+		Map<String, Integer> hitsMap = new HashMap<String, Integer>();
 		for (E e : set) {
-			int label = labelMethod.getLabel(e);
+			String label = labelMethod.getLabel(e);
 			if (!hitsMap.containsKey(label))
 				hitsMap.put(label, 1);
 			else

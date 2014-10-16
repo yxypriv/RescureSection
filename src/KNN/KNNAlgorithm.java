@@ -8,6 +8,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import utils.HitsUtil;
 import utils.ILabeler;
+import utils.Pair;
 
 public class KNNAlgorithm {
 
@@ -18,19 +19,19 @@ public class KNNAlgorithm {
 		this.points = points;
 	}
 	
-	public int cluster(IMappable newPoint) {
+	public String cluster(IMappable newPoint) {
 		return cluster(newPoint, default_K);
 	}
 	
-	public int cluster(IMappable newPoint, int K) {
+	public String cluster(IMappable newPoint, int K) {
 		List<IMappable> knn = getKNN(newPoint, K);
-		int[] mostHits = HitsUtil.getMostHits(knn, new ILabeler<IMappable>() {
+		Pair<String, Integer> mostHits = HitsUtil.getMostHits(knn, new ILabeler<IMappable>() {
 			@Override
-			public int getLabel(IMappable e) {
+			public String getLabel(IMappable e) {
 				return e.getLabel();
 			}
 		});
-		return mostHits[0];
+		return mostHits.getV1();
 	}
 
 	/**
