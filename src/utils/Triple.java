@@ -1,13 +1,15 @@
 package utils;
 
-public class Pair<P, K> {
+public class Triple<P, K, L> {
 	P v1;
 	K v2;
-
-	public Pair(P v1, K v2) {
+	L v3;
+	
+	public Triple(P v1, K v2, L v3) {
 		super();
 		this.v1 = v1;
 		this.v2 = v2;
+		this.v3 = v3;
 	}
 
 	public P getV1() {
@@ -26,6 +28,14 @@ public class Pair<P, K> {
 		this.v2 = v2;
 	}
 
+	public L getV3() {
+		return v3;
+	}
+
+	public void setV3(L v3) {
+		this.v3 = v3;
+	}
+
 	@Override
 	public int hashCode() {
 		return v1.hashCode() + v2.hashCode();
@@ -33,12 +43,14 @@ public class Pair<P, K> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!Pair.class.isInstance(obj))
+		if (!Triple.class.isInstance(obj))
 			return false;
 		try {
 			@SuppressWarnings("unchecked")
-			Pair<P, K> pObj = (Pair<P, K>) obj;
-			return this.v1.equals(pObj.getV1()) && this.v2.equals(pObj.getV2());
+			Triple<P, K, L> pObj = (Triple<P, K, L>) obj;
+			return this.v1.equals(pObj.getV1()) //
+					&& this.v2.equals(pObj.getV2())//
+					&& this.v3.equals(pObj.getV3());
 		} catch (ClassCastException e) {
 			return false;
 		}
