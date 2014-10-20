@@ -1,4 +1,4 @@
-package KNN.visualize.models;
+package KNN.visualize.v1.models;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -22,9 +22,22 @@ public class KDTreeNodeVisualizePoint extends Point {
 
 	public <T extends Comparable<T>> KDTreeNodeVisualizePoint(KDTreeNode<T, KDPoint<T>> node) {
 		Comparable<T>[] features = node.getFeatures();
-		x = (Integer) features[0];
-		y = (Integer) features[1];
+		x = (double) features[0];
+		y = (double) features[1];
 	}
+	public <T extends Comparable<T>> KDTreeNodeVisualizePoint(//
+			KDTreeNode<T, KDPoint<T>> node, //
+			double[] restrictions) {
+		Comparable<T>[] features = node.getFeatures();
+		x = (double) features[0];
+		y = (double) features[1];
+		
+		areaTop = restrictions[0];
+		areaRight = restrictions[1];
+		areaBottom = restrictions[2];
+		areaLeft = restrictions[3];
+	}
+	
 
 	public double getX() {
 		return (double) x;
@@ -46,32 +59,32 @@ public class KDTreeNodeVisualizePoint extends Point {
 		return areaTop;
 	}
 
-	public void setAreaTop(double areaTop) {
-		this.areaTop = areaTop;
+	public void setAreaTop(Comparable<java.lang.Double> comparable) {
+		this.areaTop = (double) comparable;
 	}
 
 	public double getAreaLeft() {
 		return areaLeft;
 	}
 
-	public void setAreaLeft(double areaLeft) {
-		this.areaLeft = areaLeft;
+	public void setAreaLeft(Comparable<java.lang.Double> comparable) {
+		this.areaLeft = (double) comparable;
 	}
 
 	public double getAreaRight() {
 		return areaRight;
 	}
 
-	public void setAreaRight(double areaRight) {
-		this.areaRight = areaRight;
+	public void setAreaRight(Comparable<java.lang.Double> comparable) {
+		this.areaRight = (double) comparable;
 	}
 
 	public double getAreaBottom() {
 		return areaBottom;
 	}
 
-	public void setAreaBottom(double areaBottom) {
-		this.areaBottom = areaBottom;
+	public void setAreaBottom(Comparable<java.lang.Double> comparable) {
+		this.areaBottom = (double) comparable;
 	}
 
 	public Color getColor() {
@@ -81,5 +94,8 @@ public class KDTreeNodeVisualizePoint extends Point {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
+	
+	public double[] getRestrictions() {
+		return new double[] {areaTop, areaRight, areaBottom, areaLeft};
+	}
 }

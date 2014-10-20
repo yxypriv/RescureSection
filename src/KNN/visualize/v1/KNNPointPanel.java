@@ -1,4 +1,4 @@
-package KNN.visualize;
+package KNN.visualize.v1;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import KNN.visualize.models.KDTreeNodeVisualizePoint;
+import KNN.visualize.v1.models.KDTreeNodeVisualizePoint;
 import utils.visualization.CoordinatesPaintingUtil;
 import utils.visualization.PaintingUtil;
 
@@ -112,7 +112,10 @@ public class KNNPointPanel extends JPanel {
 
 	private void paintPoints(Graphics2D g2) {
 		Color originalColor = g2.getColor();
-		CoordinatesPaintingUtil cpaintUtil = new CoordinatesPaintingUtil(20, origin.x, origin.y);
+		CoordinatesPaintingUtil cpaintUtil = new CoordinatesPaintingUtil(//
+				20, origin.x, origin.y, //
+				width - padding_left - padding_right, //
+				height - padding_top - padding_bottom);
 		for (KDTreeNodeVisualizePoint point : pointsList) {
 			g2.setColor(point.getColor());
 			// PaintingUtil.drawOval(g2, point, 2);
@@ -121,15 +124,12 @@ public class KNNPointPanel extends JPanel {
 			// point.getY());
 			switch (point.getDivide()) {
 			case 'X':
-				int x = (int) point.getX();
-				//TODO: 
-//				int y0 = Math.max(point.getAreaBottom());
-//				int yt = Math.min(point.getAreaTop(), padding_top)
-//				if()
-				g2.drawLine(x, y1, x, y2);
+				cpaintUtil.paintXSplitLine(point.getX(), point.getAreaTop(),//
+						point.getAreaBottom(), g2);
 				break;
 			case 'Y':
-
+				cpaintUtil.paintYSpltLine(point.getY(), point.getAreaLeft(),//
+						point.getAreaRight(), g2);
 				break;
 			}
 		}
