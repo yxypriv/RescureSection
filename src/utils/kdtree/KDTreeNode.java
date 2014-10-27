@@ -2,8 +2,10 @@ package utils.kdtree;
 
 public class KDTreeNode<T extends Comparable<T>, D extends IKDOrder<T>> {
 	int dimention;
-	Comparable<T>[] features;
 	Integer divideIndex;
+
+	
+	Comparable<T>[] features;
 
 	IKDOrder<T> data;
 

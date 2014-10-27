@@ -1,5 +1,7 @@
 package KNN.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,13 +17,23 @@ import KNN.models.KNNPoint;
 
 public class IrisFullCSVParser {
 	public static List<IMappable> parse(String path) {
-		return parse(path, 2, new int[] { 0, 1, 2, 3 }, 4);
+		InputStream stream = IrisFullCSVParser.class.getClassLoader().getResourceAsStream(path);
+		return parse(stream, 2, new int[] { 0, 1, 2, 3 }, 4);
 	}
-
-	public static List<IMappable> parse(String path, int skipline, int[] featureColumnIndex, int labelColumn) {
+	
+	public static List<IMappable> parseOutsource(String path) {
+		InputStream stream = null;
+		try {
+			stream = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return parse(stream, 2, new int[] { 0, 1, 2, 3 }, 4);
+	}
+	
+	public static List<IMappable> parse(InputStream stream, int skipline, int[] featureColumnIndex, int labelColumn) {
 		List<IMappable> result = new ArrayList<IMappable>();
 
-		InputStream stream = IrisFullCSVParser.class.getClassLoader().getResourceAsStream(path);
 		CSVParser parse;
 		List<CSVRecord> records = null;
 		try {
@@ -46,7 +58,7 @@ public class IrisFullCSVParser {
 	}
 
 	public static void main(String[] args) {
-		List<IMappable> points = IrisFullCSVParser.parse("KNN/irisFull.csv", 2, new int[] { 0, 1, 2, 3 }, 4);
+		List<IMappable> points = IrisFullCSVParser.parse("KNN/irisFull.csv");
 		System.out.println(points.size());
 		System.out.println(points);
 	}
