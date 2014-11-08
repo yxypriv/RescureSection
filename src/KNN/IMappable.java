@@ -1,6 +1,7 @@
 package KNN;
 
-public interface IMappable {
+import utils.interfaces.Labelabel;
+
+public interface IMappable extends Labelabel {
 	double getDistance(IMappable obj2);
-	String getLabel();
 }
