@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 
 public class FileUtil {
 	public static interface FileLineProcess {
@@ -21,7 +20,7 @@ public class FileUtil {
 	}
 
 	public static void iterateResourceFileByLine(String resourcePath, FileLineProcess process) {
-		InputStream stream = FileUtil.class.getResourceAsStream(resourcePath);
+		InputStream stream = FileUtil.class.getClassLoader().getResourceAsStream(resourcePath);
 		iterateStreamByLine(stream, process);
 	}
 
@@ -46,7 +45,8 @@ public class FileUtil {
 		String line = null;
 
 		try {
-			while ((line = reader.readLine()) != null) {
+			while (true) {
+				line = reader.readLine();
 				if (!process.process(line))
 					break;
 			}

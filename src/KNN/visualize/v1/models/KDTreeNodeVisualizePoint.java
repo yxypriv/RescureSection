@@ -20,24 +20,25 @@ public class KDTreeNodeVisualizePoint extends Point {
 
 	Color color;
 
-	public <T extends Comparable<T>> KDTreeNodeVisualizePoint(KDTreeNode<T, KDPoint<T>> node) {
+	public <T extends Comparable<T>> KDTreeNodeVisualizePoint(
+			KDTreeNode<T, KDPoint<T>> node) {
 		Comparable<T>[] features = node.getFeatures();
-		x = (double) features[0];
-		y = (double) features[1];
+		x = (java.lang.Double) features[0];
+		y = (java.lang.Double) features[1];
 	}
+
 	public <T extends Comparable<T>> KDTreeNodeVisualizePoint(//
 			KDTreeNode<T, KDPoint<T>> node, //
 			double[] restrictions) {
 		Comparable<T>[] features = node.getFeatures();
-		x = (double) features[0];
-		y = (double) features[1];
-		
+		x = (java.lang.Double) features[0];
+		y = (java.lang.Double) features[1];
+
 		areaTop = restrictions[0];
 		areaRight = restrictions[1];
 		areaBottom = restrictions[2];
 		areaLeft = restrictions[3];
 	}
-	
 
 	public double getX() {
 		return (double) x;
@@ -60,7 +61,7 @@ public class KDTreeNodeVisualizePoint extends Point {
 	}
 
 	public void setAreaTop(Comparable<java.lang.Double> comparable) {
-		this.areaTop = (double) comparable;
+		this.areaTop = (java.lang.Double) comparable;
 	}
 
 	public double getAreaLeft() {
@@ -68,7 +69,7 @@ public class KDTreeNodeVisualizePoint extends Point {
 	}
 
 	public void setAreaLeft(Comparable<java.lang.Double> comparable) {
-		this.areaLeft = (double) comparable;
+		this.areaLeft = (java.lang.Double) comparable;
 	}
 
 	public double getAreaRight() {
@@ -76,7 +77,7 @@ public class KDTreeNodeVisualizePoint extends Point {
 	}
 
 	public void setAreaRight(Comparable<java.lang.Double> comparable) {
-		this.areaRight = (double) comparable;
+		this.areaRight = (java.lang.Double) comparable;
 	}
 
 	public double getAreaBottom() {
@@ -84,7 +85,7 @@ public class KDTreeNodeVisualizePoint extends Point {
 	}
 
 	public void setAreaBottom(Comparable<java.lang.Double> comparable) {
-		this.areaBottom = (double) comparable;
+		this.areaBottom = (java.lang.Double) comparable;
 	}
 
 	public Color getColor() {
@@ -94,8 +95,8 @@ public class KDTreeNodeVisualizePoint extends Point {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public double[] getRestrictions() {
-		return new double[] {areaTop, areaRight, areaBottom, areaLeft};
+		return new double[] { areaTop, areaRight, areaBottom, areaLeft };
 	}
 }

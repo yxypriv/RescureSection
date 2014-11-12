@@ -1,4 +1,4 @@
-package perceptron;
+package perceptron.algorithm;
 
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +47,6 @@ public class PerceptronAlgorithm {
 			theta[i] = rand.nextDouble();
 		}
 
-		int count = 0;
 		for (FeatureTrainingData data : training) {
 			Double y = null;
 			if (data.getLabel().equals(labels[0]))
@@ -65,7 +64,6 @@ public class PerceptronAlgorithm {
 						alpha * (y - h) * data.getFeatures()[i];
 			}
 		}
-		errorRate(training, featureLength);
 	}
 
 	/**
