@@ -3,7 +3,7 @@ package perceptron.io;
 public class TicTacToeFeatureExtraction {
 	public static int[] extractFeature(char[] matrix) {
 		int[] features = new int[34];
-		fillFeatureFor('x', 0, matrix, features);
+		fillFeatureFor('x', 02, matrix, features);
 		fillFeatureFor('o', 17, matrix, features);
 		return features;
 	}

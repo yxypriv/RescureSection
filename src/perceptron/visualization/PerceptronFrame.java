@@ -1,12 +1,13 @@
 package perceptron.visualization;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.JTableHeader;
 
 import perceptron.algorithm.PerceptronAlgorithm;
 
@@ -30,11 +31,14 @@ public class PerceptronFrame extends JFrame {
 	public void initTable() {
 		JScrollPane scroll = new JScrollPane();
 		JTable table = new JTable();
+		
 		Dimension dimension = new Dimension(300, 400);
 		table.setSize(dimension);
 		table.setPreferredSize(dimension);
 		scroll.setPreferredSize(dimension);
 		scroll.setSize(dimension);
+
+		
 		GeneralizedTableModel model = new GeneralizedTableModel();
 
 		model.getTitle().add("a");
@@ -45,9 +49,12 @@ public class PerceptronFrame extends JFrame {
 
 		table.setModel(model);
 		scroll.setViewportView(table);
-
-		add(table);
-		add(scroll);
+		
+		Container container = getContentPane();
+		container.setLayout(new BorderLayout());
+		container.add(table.getTableHeader(), BorderLayout.PAGE_START);
+		container.add(table, BorderLayout.CENTER);
+		
 		table.repaint();
 		repaint();
 	}
