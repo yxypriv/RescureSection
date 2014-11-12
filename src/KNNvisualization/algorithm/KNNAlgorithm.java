@@ -1,4 +1,4 @@
-package KNN;
+package KNNvisualization.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;

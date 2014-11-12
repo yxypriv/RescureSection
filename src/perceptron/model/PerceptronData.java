@@ -7,6 +7,16 @@ public class PerceptronData implements FeatureTrainingData {
 	double[] features;
 	String label;
 
+	public PerceptronData(int[] features, String label) {
+		super();
+		double[] dFeatures = new double[features.length];
+		for(int i=0; i<features.length; i++) {
+			dFeatures[i] = features[i];
+		}
+		this.features = dFeatures;
+		this.label = label;
+	}
+	
 	public PerceptronData(double[] features, String label) {
 		super();
 		this.features = features;
