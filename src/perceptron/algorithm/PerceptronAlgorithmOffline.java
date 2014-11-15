@@ -46,7 +46,7 @@ public class PerceptronAlgorithmOffline {
 		for (int i = 0; i < featureLength; i++) {
 			theta[i] = rand.nextDouble();
 		}
-		int loop = 1000;
+		int loop = 4000;
 		while (--loop > 0) {
 			double[] deltaTheta = new double[theta.length];
 

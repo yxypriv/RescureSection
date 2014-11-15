@@ -106,7 +106,6 @@ public class KNNPointPanel extends JPanel {
 			g2.drawLine(origin.x - 5, origin.y - (yLength * i), origin.x + 5, origin.y - (yLength * i));
 			g2.drawString(Integer.toString(i), origin.x - 20, origin.y - (yLength * i) + 3);
 		}
-
 		g2.setColor(originalColor);
 	}
 

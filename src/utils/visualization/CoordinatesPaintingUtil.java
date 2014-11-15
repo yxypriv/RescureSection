@@ -3,6 +3,8 @@ package utils.visualization;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+
+@Deprecated
 public class CoordinatesPaintingUtil {
 	int coordinatesScale;
 	int originX;
@@ -33,7 +35,7 @@ public class CoordinatesPaintingUtil {
 		if (bottom >= 0)
 			y0 = getYInCoordinates(bottom) - 1;
 		g2.drawLine(x0, y0, x0, yt);
-	}  
+	}
 
 	public void paintYSpltLine(double y, double left, double right, Graphics2D g2) {
 		int y0 = getYInCoordinates(y);

@@ -14,9 +14,7 @@ import utils.io.FileUtil;
 import utils.io.FileUtil.FileLineProcess;
 
 public class SocketDataReceiver {
-	PerceptronAlgorithmOnlineBuff algorithm = new PerceptronAlgorithmOnlineBuff();
-	
-	public void start() {
+	public void start(final Processor processor) {
 		ServerSocket serverSocket = null;
 		Socket socket = null;
 		try {
@@ -31,27 +29,14 @@ public class SocketDataReceiver {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-//		final List<String> lines = new ArrayList<String>();
+		// final List<String> lines = new ArrayList<String>();
 		try {
 			FileUtil.iterateStreamByLine(socket.getInputStream(), new FileLineProcess() {
 				@Override
 				public boolean process(String line) {
-					if(null == line)
+					if (null == line)
 						return false;
-					System.out.println(line);
-					String[] split = line.split(",");
-					char[] originalFeature = new char[9];
-					for (int i = 0; i < 9; i++) {
-						originalFeature[i] = split[i].charAt(0);
-					}
-					String label = split[9];
-
-					OnlinePerceptronData data = new OnlinePerceptronData(//
-							TicTacToeFeatureExtraction.extractFeature(originalFeature),//
-							label, algorithm.getHistorySize());
-//					allData.add(data);
-					algorithm.train(data);
-					algorithm.errorRate();
+					processor.process(line);
 
 					return true;
 				}
@@ -59,8 +44,8 @@ public class SocketDataReceiver {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-//		System.out.println(lines.size());
-		
+		// System.out.println(lines.size());
+
 		try {
 			socket.close();
 		} catch (IOException e) {
@@ -71,11 +56,35 @@ public class SocketDataReceiver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
+	public static interface Processor {
+		public void process(String line);
+	}
+
 	public static void main(String[] args) {
 		SocketDataReceiver receiver = new SocketDataReceiver();
-		receiver.start();
+		final PerceptronAlgorithmOnlineBuff algorithm = new PerceptronAlgorithmOnlineBuff();
+		receiver.start(new Processor() {
+			@Override
+			public void process(String line) {
+				System.out.println(line);
+				String[] split = line.split(",");
+				char[] originalFeature = new char[9];
+				for (int i = 0; i < 9; i++) {
+					originalFeature[i] = split[i].charAt(0);
+				}
+				String label = split[9];
+
+				OnlinePerceptronData data = new OnlinePerceptronData(//
+						TicTacToeFeatureExtraction.extractFeature(originalFeature),//
+						label, algorithm.getHistorySize());
+				// allData.add(data);
+				algorithm.train(data);
+				algorithm.errorRate();
+
+			}
+		});
 	}
 }

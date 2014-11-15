@@ -21,7 +21,9 @@ public class PerceptronAlgorithmOnlineBuff {
 	List<FeatureTrainingData> negativeBuff = new ArrayList<FeatureTrainingData>();
 	int buffSize = 100;
 
-	public double alpha = 0.05 / buffSize;
+	int pathHit = 0;
+
+	public double alpha = 0.02 / buffSize;
 
 	/**
 	 * generate new model
@@ -57,16 +59,29 @@ public class PerceptronAlgorithmOnlineBuff {
 		} else {
 			negativeBuff.add(data);
 		}
+		double dataY = 0.0;
+		if (data.getLabel().equals(positiveLabel))
+			dataY = 1.0;
+		else
+			dataY = -1.0;
+
+		double dataH = 0.0;
+		for (int i = 0; i < featureLength; i++) {
+			dataH += theta[i] * getFeature(data, i);
+		}
+		if (dataY * dataH > 0)
+			pathHit++;
 
 		List<FeatureTrainingData> buffList = new ArrayList<FeatureTrainingData>();
 		buffList.addAll(positiveBuff);
 		buffList.addAll(negativeBuff);
 		int loop = 10;
 		while (--loop >= 0) {
-			double[] deltaTheta = new double[theta.length];
+//			double[] deltaTheta = new double[theta.length];
 			for (int k = 0; k < buffList.size(); k++) {
-				// FeatureTrainingData buffData = buffList.get(k);
-				FeatureTrainingData buffData = buffList.get(k / 2 + (k % 2) * (buffList.size() / 2));
+				FeatureTrainingData buffData = buffList.get(k);
+				// FeatureTrainingData buffData = buffList.get(k / 2 + (k % 2) *
+				// (buffList.size() / 2));
 				Double y = null;
 				if (buffData.getLabel().equals(positiveLabel))
 					y = 1.0;
@@ -79,19 +94,22 @@ public class PerceptronAlgorithmOnlineBuff {
 				}
 
 				for (int i = 0; i < featureLength; i++) {
-					deltaTheta[i] = deltaTheta[i] + //
+					theta[i] = theta[i] + //
 							alpha * (y - h) * getFeature(buffData, i);
 				}
 			}
-			for (int i = 0; i < theta.length; i++) {
-				theta[i] += deltaTheta[i];
-			}
+//			for (int i = 0; i < theta.length; i++) {
+//				theta[i] += deltaTheta[i];
+//			}
 		}
 		historyData.add(data);
 	}
 
 	/**
-	 * 0.3883089770354906 add buff 0.35386221294363257 for original
+	 * 0.7317327766179541 0.9592901878914405 add loop 100
+	 * 0.6670146137787056 0.8308977035490606 add loop 10
+	 * 0.6461377870563675 0.6889352818371608 add buff. 
+	 * 0.6367432150313153 0.6951983298538622 for original
 	 */
 	public void errorRate() {
 		double J = 0.0;
@@ -115,7 +133,7 @@ public class PerceptronAlgorithmOnlineBuff {
 				hit++;
 			}
 		}
-		System.out.println(J + "\t" + J_sign + "\t" + hit / historyData.size());
+		System.out.println(J + "\t" + J_sign + "\t" + hit / historyData.size() + "\t" + ((double) pathHit) / historyData.size());
 	}
 
 	public void displayStatus() {

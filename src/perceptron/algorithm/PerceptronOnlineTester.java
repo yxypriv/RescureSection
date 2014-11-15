@@ -3,7 +3,7 @@ package perceptron.algorithm;
 import java.util.ArrayList;
 import java.util.List;
 
-import perceptron.io.TicTacToeFeatureExtraction;
+import perceptron.io.TicTacToeFeatureExtraction2;
 import perceptron.model.OnlinePerceptronData;
 import utils.interfaces.FeatureTrainingData;
 import utils.io.FileUtil;
@@ -32,7 +32,7 @@ public class PerceptronOnlineTester {
 				String label = split[9];
 
 				OnlinePerceptronData data = new OnlinePerceptronData(//
-						TicTacToeFeatureExtraction.extractFeature(originalFeature),//
+						TicTacToeFeatureExtraction2.extractFeature(originalFeature),//
 						label, allData.size());
 				allData.add(data);
 
